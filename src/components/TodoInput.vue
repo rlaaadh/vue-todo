@@ -1,6 +1,6 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" @keyup.enter="addTodo">
+    <input type="text" v-model="newTodoItem" @keyup.enter="addTodo" ref="inputField">
     <span class="addContainer" v-on:click="addTodo">
       <i class="fa-solid fa-plus addBtn"></i>
     </span>
@@ -31,6 +31,7 @@ export default {
         this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
       }else{
+        this.$refs.inputField.blur();
         this.showModal = !this.showModal;
       }
     },
@@ -50,9 +51,10 @@ input:focus {
 }
 .inputBox {
   display: flex;
-	background: white;
 	height: 50px;
+  margin: 0 10px;
 	line-height: 50px;
+	background: white;
 	border-radius: 5px;
 }
 .inputBox input {
@@ -60,6 +62,7 @@ input:focus {
   padding: 0 1rem;
 	border: 1px solid white;
 	font-size: 0.9rem;
+  border-radius: 5px;
   box-sizing:border-box;
 }
 .inputBox input:focus{

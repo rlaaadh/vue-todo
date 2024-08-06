@@ -29,8 +29,8 @@
 <style scoped>
 ul {
 	list-style-type: none;
-	padding-left: 0px;
-	margin-top: 0;
+	padding: 0;
+	margin: 0 10px;
 	text-align: left;
 }
 li {
@@ -68,7 +68,7 @@ li:has(.checkBtnCompleted):hover{
   position: relative;
   z-index: 2;
   flex: 1;
-  padding-top: 10px;
+  padding-top: 8px;
   color: #333;
   font-weight: 700;
   box-sizing: border-box;

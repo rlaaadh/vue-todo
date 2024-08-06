@@ -1,6 +1,6 @@
 <template>
   <div class="clearAllContainer shadow">
-    <span class="clearAllBtn" v-on:click="clearTodo">Clear All</span>
+    <span class="clearAllBtn" v-on:click="clearTodo">모두 지우기</span>
   </div>
 </template>
 
@@ -17,9 +17,11 @@ export default {
 <style scoped>
 .clearAllContainer {
 	width: 8.5rem;
-	height: 50px;
-	margin: 30px auto 0;
-	line-height: 50px;
+	height: 40px;
+	margin: 30px auto;
+  font-size: 14px;
+	line-height: 40px;
+  font-weight: 700;
 	background-color: white;
 	border-radius: 5px;
 }

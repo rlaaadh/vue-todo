@@ -67,9 +67,14 @@ export default {
 </script>
 
 <style>
+  html{
+    margin: 0;
+  }
   body{
+    font-family: "Nanum Gothic", sans-serif;
     text-align: center;
     background-color:#f6f6f6;
+    margin: 0;
   }
   input{
     border-style: groove;
