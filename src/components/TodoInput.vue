@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import commonModal from './common/commonModal.vue';
+import Modal from './common/commonModal.vue';
 
 export default {
   data() {
@@ -26,7 +26,7 @@ export default {
     };
   },
   methods: {
-    addTodo: function(){
+    addTodo(){
       if(this.newTodoItem.trim() !== ''){
         this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
@@ -35,12 +35,12 @@ export default {
         this.showModal = !this.showModal;
       }
     },
-    clearInput: function(){
+    clearInput(){
       this.newTodoItem = '';
     }
   },
   components: {
-    Modal: commonModal
+    Modal
   }
 }
 </script>
