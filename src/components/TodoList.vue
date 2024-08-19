@@ -1,29 +1,30 @@
 <template>
   <div>
     <transition-group name="list" tag="ul">
-      <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item" class="shadow" v-on:click="toggleComplete(todoItem, index)">
+      <li v-for="todoItem in propsdata" v-bind:key="todoItem.id" class="shadow" v-on:click="toggleComplete(todoItem.id)">
         <i class="fas fa-check checkBtn" v-bind:class="{checkBtnCompleted: todoItem.completed}"></i>
-        <span class="text" v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+        <span class="text" v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.contents }}</span>
+        <span class="removeBtn" v-on:click="removeTodo(todoItem.id, $event)">
           <i class="fas fa-trash-alt"></i>
         </span>
-        </li>
+      </li>
     </transition-group>
-    </div>
-  </template>
+  </div>
+</template>
 
 <script>
-  export default{
-    props: ['propsdata'],
-    methods: {
-      removeTodo(todoItem, index){
-        this.$emit('removeItem', todoItem, index);
-      },
-      toggleComplete(todoItem, index){
-        this.$emit('toggleItem', todoItem, index);
-      }
-    }
+export default {
+  props: ['propsdata'],
+  methods: {
+    removeTodo(id, event){
+      event.stopPropagation(); // 이벤트 전파 방지
+      this.$emit('removeItem', id);
+    },
+    toggleComplete(id){
+      this.$emit('toggleItem', id);
+    },
   }
+}
 </script>
 
 <style scoped>

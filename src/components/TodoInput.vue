@@ -1,6 +1,6 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" @keyup.enter="addTodo" ref="inputField">
+    <input type="text" v-model="newTodoItem" @keyup.enter.stop="addTodo" ref="inputField" placeholder="할일을 입력해주세요">
     <span class="addContainer" v-on:click="addTodo">
       <i class="fa-solid fa-plus addBtn"></i>
     </span>
