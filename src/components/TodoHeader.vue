@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>오늘의 할일 📝</h1>
+    <h1>투두리스트 📝</h1>
   </div>
 </template>
 
