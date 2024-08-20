@@ -95,7 +95,7 @@ li:hover{
 /* completed */
 .completed,
 .completed:hover{
-  background-color: #e0e0e0;
+  background-color: #cecece;
 }
 .completed .checkBtn {
 	color: #b3adad;
