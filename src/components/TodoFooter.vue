@@ -16,24 +16,16 @@ export default {
 
 <style scoped>
 .clearAllContainer {
-	height: 30px;
 	margin: 10px;
-  font-size: 14px;
-	line-height: 30px;
-  font-weight: 700;
-	background-color: white;
-	border-radius: 5px;
-  box-sizing: border-box;
-}
-.clearAllContainer:hover{
-  background-color: #fbe5e5;
 }
 .clearAllBtn {
 	display: block;
   font-size: 13px;
+	line-height: 35px;
   color: white;
-	background-color: rgb(157, 157, 157);
-  border-radius: 5px;
+  font-weight: 700;
+	background-color: rgb(79 79 79);
+  border-radius: 15px;
   cursor: pointer;
 }
 </style>

@@ -63,7 +63,7 @@ export default {
     line-height: 20px;
     margin-top: 0;
     padding-top: 3px;
-    color: #f74083;
+    color: #3fc7ff;
   }
   .modal-body p{
     margin: 0 0 10px 0;

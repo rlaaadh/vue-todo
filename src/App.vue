@@ -2,9 +2,9 @@
   <div id="app">
     <TodoHeader/>
     <TodoInput @addTodoItem="addOneItem"/>
-    <section>
+    <section class="today">
       <div class="top">
-        <h2 class="title">🩷 오늘의 계획 🩷 </h2>
+        <h2 class="title">☁️ 오늘의 계획 ☁️</h2>
         <TodoSelect :selectedValue="incompleteSortOptions" @selectedValue="setIncompleteSortOptions"/>
       </div>
       <TodoList 
@@ -19,7 +19,7 @@
 
     <section>
       <div class="top">
-        <h2 class="title">💖 완료한 일 💖</h2>
+        <h2 class="title">☁️ 완료한 일 ☁️</h2>
         <TodoSelect :selectedValue="completedSortOptions" @selectedValue="setCompletedSortOptions"/>
       </div>
       <TodoList 
@@ -34,6 +34,14 @@
 
     <TodoFooter
       @clearAll="clearAllItems"/>
+
+      <Modal v-if="showModal" @close="showModal=false">
+      <div slot="header">
+        <h3>알림</h3>
+        <i class="closeModalBtn fas fa-times" @click="showModal=false"></i>
+      </div>
+      <p slot="body">모든 기록이 초기화 되었습니다.</p>
+    </Modal>
   </div>
 </template>
 
@@ -43,6 +51,7 @@ import TodoInput from './components/TodoInput.vue'
 import TodoSelect from './components/TodoSelect.vue'
 import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
+import Modal from './components/common/commonModal.vue'
 
 export default {
   data(){
@@ -50,6 +59,7 @@ export default {
       todoItems: [],
       incompleteSortOptions: 'latest', // 기본값 설정
       completedSortOptions: 'latest', // 기본값 설정
+      showModal: false
     }
   },
   computed: {
@@ -73,10 +83,11 @@ export default {
         hour12: false // 24시간 형식
       });
     },
-    addOneItem(todoItem){
+    addOneItem(todoTitle, todoText){
       const obj = {
         id: `TODO_${Date.now().toString()}`,
-        contents: todoItem,
+        title: todoTitle,
+        text: todoText,
         inputDate: this.getCurrentDateTime(),
         // modifyDate: '수정날짜',
         completed: false,
@@ -137,6 +148,9 @@ export default {
 
       // 5) 상태를 필터링하여 새 배열로 업데이트
       this.todoItems = [];
+
+      // 6) 알림 모달창 출력
+      this.showModal = true;
     });
     },
     setIncompleteSortOptions(selectedValue) {
@@ -155,7 +169,7 @@ export default {
           sorted.sort((a, b) => a.id.localeCompare(b.id));
           break;
         case 'alphabetical':
-          sorted.sort((a, b) => a.contents.localeCompare(b.contents));
+          sorted.sort((a, b) => a.title.localeCompare(b.title));
           break;
       }
       return sorted;
@@ -193,6 +207,7 @@ export default {
     TodoSelect,
     TodoList,
     TodoFooter,
+    Modal,
   }
 }
 </script>
@@ -204,7 +219,6 @@ export default {
   body{
     font-family: "Nanum Gothic", sans-serif;
     text-align: center;
-    background-color:#f6f6f6;
     margin: 0;
   }
   section{
@@ -214,15 +228,22 @@ export default {
     border-radius: 10px;
     box-sizing: border-box;
   }
+  section.today{
+    background-color:#daf6f995;
+  }
   section .top{
     display:flex;
   }
   .title{
     flex:1;
     font-size: 15px;
-    line-height: 29px;
+    line-height: 1.2;
     text-align: left;
-    margin: 10px;
+    margin: 10px 0;
+  }
+  .text{
+    font-size: 13px;
+    line-height: 1.2;
   }
   input{
     border-style: groove;

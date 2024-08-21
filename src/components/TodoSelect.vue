@@ -23,19 +23,22 @@ export default {
   .selectBox{
     display: flex;
     justify-content: end;
-    margin: 10px;
-  }
-  .selectBox select{
     width: 100px;
-    padding: 5px;
+    margin: 5px 10px;
+    background-color: #fff;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     box-sizing: border-box;
-    cursor: pointer;
   }
-  .selectBox select:focus,
-  .selectBox select::selection{
-    border-color: #f74083;
+  .selectBox select{
+    display:block;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
     outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
   }
 </style>

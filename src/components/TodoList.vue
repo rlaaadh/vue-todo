@@ -4,7 +4,10 @@
       <li v-for="todoItem in propsdata" :key="todoItem.id" class="shadow" :class="{completed: todoItem.completed}" @click="toggleComplete(todoItem.id)">
         <div class="contents">
           <i class="fas fa-check checkBtn"></i>
-          <span class="text">{{ todoItem.contents }}</span>
+          <div class="contents-text">
+            <div class="title">{{ todoItem.title }}</div>
+            <div class="text">{{ todoItem.text }}</div>
+          </div>
           <span class="removeBtn" @click="removeTodo(todoItem.id, $event)">
             <i class="fas fa-trash-alt"></i>
           </span>
@@ -55,35 +58,40 @@ li .contents{
   align-content: center;
 }
 li:hover{
-  background-color: #fbe5e5;
+  background-color: #f2fdff;
   cursor: pointer;
 }
 .checkBtn {
-  margin-right: 10px;
-  line-height: 35px;
+  margin: 3px 10px 0 0;
   color: inherit;
-  color: rgb(249, 51, 133);
+  color: #0c9dd9;
 }
-.text{
+.contents-text{
+  flex: 1;
+}
+.title{
   position: relative;
   z-index: 2;
-  flex: 1;
+  margin: 0;
   padding-top: 3px;
   color: #333;
   font-weight: 700;
   box-sizing: border-box;
+}
+.text{
+  margin-top: 5px;
 }
 .removeBtn {
   position: relative;
   z-index: 2;
   display: block;
   width: 14px;
-  height: 30px;
-  margin: 10px 0 0 10px;
+  margin-left: 10px;
 	color: #9b9b9b;
   cursor: pointer;
 }
 .desc{
+  margin-top: 10px;
   font-size: 12px;
   line-height: 1.2;
   color: #666;
@@ -103,7 +111,8 @@ li:hover{
 .completed .checkBtn:hover{
   background-color:transparent;
 }
-.completed .text {
+.completed .title,
+.completed .text{
 	color: #7b7b7b;
   font-weight: 400;
 	text-decoration: line-through;

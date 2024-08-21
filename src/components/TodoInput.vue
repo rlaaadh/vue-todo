@@ -1,16 +1,33 @@
 <template>
-  <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" @keyup.enter.stop="addTodo" ref="inputField" placeholder="할일을 입력해주세요">
-    <span class="addContainer" v-on:click="addTodo">
-      <i class="fa-solid fa-plus addBtn"></i>
-    </span>
+  <div>
+    <form action="">
+      <div>
+        <label for="titleFiled">제목</label>
+        <input type="text" v-model="newTodoItem" id="titleFiled" placeholder="제목을 입력해주세요">
+      </div>
+      <div>
+        <label for="textFiled">내용</label>
+        <textarea
+          name="textFiled"
+          id="textFiled"
+          cols="30"
+          rows="10"
+          placeholder="내용을 입력해주세요"
+          v-model="newTodoText"
+          @keyup.enter.stop="addTodo">
+        </textarea>
+      </div>
+      <button class="addContainer" v-on:click="addTodo">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </form>
 
     <Modal v-if="showModal" @close="showModal = false">
       <div slot="header">
         <h3>경고</h3>
         <i class="closeModalBtn fas fa-times" @click="showModal=false"></i>
       </div>
-      <p slot="body">입력창에 내용을 입력해주세요.</p>
+      <p slot="body">모든 입력창에 내용을 입력해주세요.</p>
     </Modal>
   </div>
 </template>
@@ -22,21 +39,30 @@ export default {
   data() {
     return {
       newTodoItem: '',
+      newTodoText: '',
       showModal: false
     };
   },
   methods: {
-    addTodo(){
-      if(this.newTodoItem.trim() !== ''){
-        this.$emit('addTodoItem', this.newTodoItem);
+    addTodo(event){
+      event.preventDefault();
+
+      if(this.newTodoItem.trim() !== '' && this.newTodoText.trim() !== ''){
+        this.$emit('addTodoItem', this.newTodoItem , this.newTodoText) ;
         this.clearInput();
+
       }else{
-        this.$refs.inputField.blur();
+        const input = document.querySelector('input');
+        const textArea = document.querySelector('textarea');
+        input.blur();
+        textArea.blur();
+
         this.showModal = !this.showModal;
       }
     },
     clearInput(){
       this.newTodoItem = '';
+      this.newTodoText = '';
     }
   },
   components: {
@@ -46,40 +72,56 @@ export default {
 </script>
 
 <style scoped>
-input:focus {
-	outline: none;
+form {
+  margin: 10px;
+  padding: 20px;
+  background-color: #daf6f995;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
-.inputBox {
+form div{
   display: flex;
-	height: 50px;
-  margin: 0 10px;
-	line-height: 50px;
-	background: white;
-	border-radius: 5px;
+  align-content: flex-start;
+  list-style:none;
+  text-align: left;
 }
-.inputBox input {
-  flex: 1;
-  padding: 0 1rem;
-	border: 1px solid white;
-	font-size: 0.9rem;
+form div + div{
+  margin-top:10px;
+}
+form label{
+  width: 30px;
+  margin-right: 10px;
+  font-size: 13px;
+  line-height: 26px;
+}
+form input,
+form textarea {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #fff;
+	outline: none;
   border-radius: 5px;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
-.inputBox input:focus{
-  border-color: #f74083 transparent #f74083 #f74083;
-  border-radius: 5px 0 0 5px;
+form input:focus,
+form textarea:focus{
+  border:1px solid #3fc7ff;
 }
-.addContainer {
-	float: right;
-	background: linear-gradient(to right, #feafcc, #f74083);
-	display: block;
-	width: 3rem;
-	border-radius: 0 5px 5px 0;
+.addContainer{
+  width: 100%;
+  height: 35px;
+  margin-top:15px;
+  padding: 5px;
+  font-size: 13px;
+  background-color: #3fc7ff;
+  border: none;
+  border-radius:15px;
+  box-sizing: border-box;
   cursor: pointer;
 }
-.addBtn {
-	color: white;
-	vertical-align: middle;
+.addContainer i{
+  color: #fff;
 }
 .closeModalBtn{
   font-size: 20px;
