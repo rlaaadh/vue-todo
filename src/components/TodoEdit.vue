@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="todo-edit">
+    <TodoHeader>수정 페이지</TodoHeader>
     <form action="">
       <div>
         <label for="titleFiled">제목</label>
-        <input type="text" v-model="newTodoItem" id="titleFiled" placeholder="제목을 입력해주세요">
+        <input type="text" v-model="todo.title" id="titleFiled" placeholder="제목을 입력해주세요">
       </div>
       <div>
         <label for="textFiled">내용</label>
@@ -13,61 +14,67 @@
           cols="30"
           rows="4"
           placeholder="내용을 입력해주세요"
-          v-model="newTodoText"
+          v-model="todo.text"
           @keyup.enter.stop="addTodo">
         </textarea>
       </div>
-      <button class="addContainer" v-on:click="addTodo">
-        <i class="fa-solid fa-plus"></i>
+      <button class="addContainer" v-on:click="updateTodo">
+        <i class="fa-solid fa-check"></i>
       </button>
     </form>
 
+    <!-- 모달 컴포넌트 -->
     <Modal v-if="showModal" @close="showModal = false">
       <div slot="header">
-        <h3>경고</h3>
+        <h3>알림</h3>
       </div>
-      <p slot="body">모든 입력창에 내용을 입력해주세요.</p>
+      <div slot="body">
+        <p>수정이 완료되었습니다.</p>
+      </div>
     </Modal>
   </div>
 </template>
 
 <script>
+import TodoHeader from './TodoHeader.vue';
 import Modal from './common/commonModal.vue';
 
 export default {
+  components: {
+    TodoHeader,
+    Modal
+  },
   data() {
     return {
-      newTodoItem: '',
-      newTodoText: '',
+      todo: {
+        title: '',
+        text: '',
+        inputDate: '',
+        modifyDate: '',
+      },
       showModal: false
     };
   },
-  methods: {
-    addTodo(event){
-      event.preventDefault();
-
-      if(this.newTodoItem.trim() !== '' && this.newTodoText.trim() !== ''){
-        this.$emit('addTodoItem', this.newTodoItem , this.newTodoText) ;
-        this.clearInput();
-
-      }else{
-        const input = document.querySelector('input');
-        const textArea = document.querySelector('textarea');
-        input.blur();
-        textArea.blur();
-
-        this.showModal = !this.showModal;
-      }
-    },
-    clearInput(){
-      this.newTodoItem = '';
-      this.newTodoText = '';
+  created() {
+    const id = this.$route.params.id;
+    const todoItem = JSON.parse(localStorage.getItem(id));
+    if (todoItem) {
+      this.todo = { ...todoItem };
     }
   },
-  components: {
-    Modal
+  methods: {
+    updateTodo(event) {
+      event.preventDefault();
+      
+      this.todo.modifyDate = new Date().toLocaleString('ko-KR'); // 수정 날짜 업데이트
+      localStorage.setItem(this.$route.params.id, JSON.stringify(this.todo));
+      this.showModal = true; // 모달 표시
+      setTimeout(() => {
+        this.$router.push('/');
+      }, 1000); // 모달이 1초간 보이도록 하고, 그 후에 페이지 이동
+    }
   }
-}
+};
 </script>
 
 <style scoped>
