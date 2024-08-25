@@ -70,7 +70,7 @@ export default {
       localStorage.setItem(this.$route.params.id, JSON.stringify(this.todo));
       this.showModal = true; // 모달 표시
       setTimeout(() => {
-        this.$router.push('/');
+        this.$router.push('/vue-todo/');
       }, 1000); // 모달이 1초간 보이도록 하고, 그 후에 페이지 이동
     }
   }

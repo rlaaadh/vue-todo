@@ -9,12 +9,12 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/vue-todo/',
       name: 'TodoMain',
       component: TodoMain
     },
     {
-      path: '/edit/:id',
+      path: '/vue-todo/edit/:id',
       name: 'TodoEdit',
       component: TodoEdit,
       props: true
