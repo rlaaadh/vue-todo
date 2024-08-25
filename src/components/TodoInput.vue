@@ -45,19 +45,18 @@ export default {
   methods: {
     addTodo(event){
       event.preventDefault();
+      const input = document.querySelector('input');
+      const textArea = document.querySelector('textarea');
 
       if(this.newTodoItem.trim() !== '' && this.newTodoText.trim() !== ''){
         this.$emit('addTodoItem', this.newTodoItem , this.newTodoText) ;
         this.clearInput();
-
       }else{
-        const input = document.querySelector('input');
-        const textArea = document.querySelector('textarea');
-        input.blur();
-        textArea.blur();
-
         this.showModal = !this.showModal;
       }
+
+      input.blur();
+      textArea.blur();
     },
     clearInput(){
       this.newTodoItem = '';

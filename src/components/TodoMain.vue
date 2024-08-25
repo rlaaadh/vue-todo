@@ -105,8 +105,8 @@ export default {
     clearAllItems() {
       const keys = Object.keys(localStorage);
       keys.forEach(key => {
-        let item = JSON.parse(localStorage.getItem(key));
-        if (item) {
+        const item = JSON.parse(localStorage.getItem(key));
+        if (item && typeof item === 'object' && !Array.isArray(item) && item !== null) {
           item.deleted = true;
           localStorage.setItem(key, JSON.stringify(item));
         }
@@ -123,6 +123,12 @@ export default {
       localStorage.setItem('completedSortOptions', JSON.stringify(selectedValue));
     },
     sortItems(items, sortOption) {
+      // 배열의 요소가 객체인지 확인
+      if (items.every(item => typeof item !== 'object')) {
+        console.warn('All items should be non-null objects');
+        return [];
+      }
+      
       let sorted = [...items];
       switch (sortOption) {
         case 'latest':
@@ -173,7 +179,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* 스타일링 */
-</style>
