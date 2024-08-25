@@ -11,7 +11,7 @@
           name="textFiled"
           id="textFiled"
           cols="30"
-          rows="10"
+          rows="4"
           placeholder="내용을 입력해주세요"
           v-model="newTodoText"
           @keyup.enter.stop="addTodo">
@@ -25,7 +25,6 @@
     <Modal v-if="showModal" @close="showModal = false">
       <div slot="header">
         <h3>경고</h3>
-        <i class="closeModalBtn fas fa-times" @click="showModal=false"></i>
       </div>
       <p slot="body">모든 입력창에 내용을 입력해주세요.</p>
     </Modal>
@@ -99,6 +98,8 @@ form textarea {
   display: block;
   width: 100%;
   padding: 5px;
+  font-size: 13px;
+  line-height: 26px;
   border: 1px solid #fff;
 	outline: none;
   border-radius: 5px;
@@ -122,12 +123,5 @@ form textarea:focus{
 }
 .addContainer i{
   color: #fff;
-}
-.closeModalBtn{
-  font-size: 20px;
-  color: #333;
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
 }
 </style>

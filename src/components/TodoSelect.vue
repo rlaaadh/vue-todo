@@ -13,7 +13,7 @@ export default {
   props: ['selectedValue'],
   methods: {
     emitSelectedValue(event) {
-      this.$emit('selectedValue', event.target.value);
+      this.$emit('value', event.target.value);
     }
   }
 }
@@ -25,9 +25,6 @@ export default {
     justify-content: end;
     width: 100px;
     margin: 5px 10px;
-    background-color: #fff;
-    border: 1px solid #d1d1d1;
-    border-radius: 5px;
     box-sizing: border-box;
   }
   .selectBox select{
@@ -35,10 +32,17 @@ export default {
     width: 100%;
     height: 100%;
     padding: 5px;
-    background-color: transparent;
-    border: none;
+    font-size: 13px;
+    line-height: 1;
+    color: #222;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
     outline: none;
     box-sizing: border-box;
     cursor: pointer;
+  }
+  .selectBox select:focus{
+    border-color: #3fc7ff;
   }
 </style>

@@ -5,13 +5,13 @@
     <section class="today">
       <div class="top">
         <h2 class="title">☁️ 오늘의 계획 ☁️</h2>
-        <TodoSelect :selectedValue="incompleteSortOptions" @selectedValue="setIncompleteSortOptions"/>
+        <TodoSelect :selectedValue="incompleteSortOptions" @value="setIncompleteSortOptions"/>
       </div>
       <TodoList 
       :propsdata="incompleteItems" 
       @removeItem="removeOneItem"
       @toggleItem="toggleOneItem"/>
-      <!-- 조건부 렌더링으로 할 일이 없는 경우 문구 표시 -->
+      <!--  할 일이 없는 경우 -->
       <div v-if="!incompleteItems.length" class="empty-message">
         오늘의 할 일을 등록해보세요.
       </div>
@@ -20,7 +20,7 @@
     <section>
       <div class="top">
         <h2 class="title">☁️ 완료한 일 ☁️</h2>
-        <TodoSelect :selectedValue="completedSortOptions" @selectedValue="setCompletedSortOptions"/>
+        <TodoSelect :selectedValue="completedSortOptions" @value="setCompletedSortOptions"/>
       </div>
       <TodoList 
       :propsdata="completedItems" 
@@ -35,13 +35,12 @@
     <TodoFooter
       @clearAll="clearAllItems"/>
 
-      <Modal v-if="showModal" @close="showModal=false">
-      <div slot="header">
-        <h3>알림</h3>
-        <i class="closeModalBtn fas fa-times" @click="showModal=false"></i>
-      </div>
-      <p slot="body">모든 기록이 초기화 되었습니다.</p>
-    </Modal>
+      <Modal v-if="showModal" @close="showModal = false">
+        <div slot="header">
+          <h3>알림</h3>
+        </div>
+        <p slot="body">모든 기록이 초기화 되었습니다.</p>
+      </Modal>
   </div>
 </template>
 
@@ -94,11 +93,8 @@ export default {
         deleted: false
       };
       localStorage.setItem(obj.id, JSON.stringify(obj));
-      this.todoItems = [...this.todoItems, obj]; // 배열을 새 배열로 업데이트
+      this.todoItems.push(obj); // 배열을 새 배열로 업데이트
       
-      // 새 항목 추가 후 정렬 적용
-      this.sortAllItems(this.incompleteSortOptions, 'incomplete');
-      this.sortAllItems(this.completedSortOptions, 'completed');
     },
     removeOneItem(id){
       // 1) id값으로 item 데이터값을 가져옴.
@@ -155,34 +151,42 @@ export default {
     },
     setIncompleteSortOptions(selectedValue) {
       this.incompleteSortOptions = selectedValue;
+      localStorage.setItem('incompleteSortOptions', JSON.stringify(selectedValue));
     },
     setCompletedSortOptions(selectedValue) {
       this.completedSortOptions = selectedValue;
+      localStorage.setItem('completedSortOptions', selectedValue);
+      localStorage.setItem('completedSortOptions', JSON.stringify(selectedValue));
     },
     sortItems(items, sortOption) {
-      let sorted = [...items];
-      switch(sortOption) {
-        case 'latest':
-          sorted.sort((a, b) => b.id.localeCompare(a.id));
-          break;
-        case 'oldest':
-          sorted.sort((a, b) => a.id.localeCompare(b.id));
-          break;
-        case 'alphabetical':
-          sorted.sort((a, b) => a.title.localeCompare(b.title));
-          break;
-      }
-      return sorted;
-    },
-    sortAllItems(sortOption, type) {
-      if (type === 'incomplete') {
-        this.incompleteItems = this.sortItems(this.todoItems.filter(item => !item.completed), sortOption);
-      } else if (type === 'completed') {
-        this.completedItems = this.sortItems(this.todoItems.filter(item => item.completed), sortOption);
-      }
+    let sorted = [...items];
+    switch(sortOption) {
+      case 'latest':
+        sorted.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+        break;
+      case 'oldest':
+        sorted.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+        break;
+      case 'alphabetical':
+        sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+        break;
     }
+    return sorted;
+  },
+
   },
   created(){
+    // 로컬스토리지에서 정렬 옵션 값을 가져옴
+    const savedIncompleteSortOption = JSON.parse(localStorage.getItem('incompleteSortOptions'));
+    const savedCompletedSortOption = JSON.parse(localStorage.getItem('completedSortOptions'));
+
+    if (savedIncompleteSortOption) {
+      this.incompleteSortOptions = savedIncompleteSortOption;
+    }
+    if (savedCompletedSortOption) {
+      this.completedSortOptions = savedCompletedSortOption;
+    }
+
     if(localStorage.length > 0){
       for(let i=0; i < localStorage.length; i++){
         const key = localStorage.key(i);
@@ -195,10 +199,6 @@ export default {
         }
       }
     }
-
-    // sort 기본값 정의 및 실행
-    this.sortAllItems(this.incompleteSortOptions, 'incomplete');
-    this.sortAllItems(this.completedSortOptions, 'completed');
   },
   name: 'App',
   components: {
@@ -220,6 +220,7 @@ export default {
     font-family: "Nanum Gothic", sans-serif;
     text-align: center;
     margin: 0;
+    overflow-x: hidden;
   }
   section{
     margin: 10px;

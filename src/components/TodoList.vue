@@ -8,6 +8,9 @@
             <div class="title">{{ todoItem.title }}</div>
             <div class="text">{{ todoItem.text }}</div>
           </div>
+          <span class="modifyBtn">
+            <i class="fas fa-pencil-alt"></i>
+          </span>
           <span class="removeBtn" @click="removeTodo(todoItem.id, $event)">
             <i class="fas fa-trash-alt"></i>
           </span>
@@ -80,6 +83,11 @@ li:hover{
 }
 .text{
   margin-top: 5px;
+}
+.modifyBtn{
+  position: relative;
+	color: #9b9b9b;
+  z-index: 2;
 }
 .removeBtn {
   position: relative;

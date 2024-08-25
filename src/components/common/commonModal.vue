@@ -5,17 +5,11 @@
             <div class="modal-container">
               <div class="modal-header">
                 <slot name="header">header</slot>
+                <i class="modal-close fas fa-times" @click="$emit('close')"></i>
               </div>
               <div class="modal-body">
                 <slot name="body">body</slot>
               </div>
-              <!-- <div class="modal-footer">
-                <slot name="footer">
-                  <button class="modal-default-button" @click="$emit('close')">
-                    닫기
-                  </button>
-                </slot>
-              </div> -->
             </div>
           </div>
         </div>
@@ -55,11 +49,13 @@ export default {
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
   }
-  .modal-header > div{
+  .modal-header {
     display: flex;
   }
-  .modal-header h3 {
+  .modal-header > div{
     flex: 1;
+  }
+  .modal-header h3 {
     line-height: 20px;
     margin-top: 0;
     padding-top: 3px;
@@ -78,6 +74,13 @@ export default {
     border: none;
     cursor: pointer;
   }
+  .modal-close{
+  font-size: 20px;
+  color: #333;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
   .modal-default-button:hover{
     background: #fbe5e5;
   }
