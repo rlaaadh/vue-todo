@@ -73,7 +73,7 @@ export default {
 form {
   margin: 10px;
   padding: 20px;
-  background-color: #daf6f995;
+  background-color: var(--secondary-color);
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -106,7 +106,7 @@ form textarea {
 }
 form input:focus,
 form textarea:focus{
-  border:1px solid #3fc7ff;
+  border:1px solid var(--primary-color);
 }
 .addContainer{
   width: 100%;
@@ -114,7 +114,7 @@ form textarea:focus{
   margin-top:15px;
   padding: 5px;
   font-size: 13px;
-  background-color: #3fc7ff;
+  background-color:  var(--primary-color);
   border: none;
   border-radius:15px;
   box-sizing: border-box;

@@ -43,6 +43,6 @@ export default {
     cursor: pointer;
   }
   .selectBox select:focus{
-    border-color: #3fc7ff;
+    border-color:  var(--primary-color);
   }
 </style>

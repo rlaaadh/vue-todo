@@ -47,7 +47,6 @@ export default {
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    font-family: Helvetica, Arial, sans-serif;
   }
   .modal-header {
     display: flex;
@@ -59,7 +58,7 @@ export default {
     line-height: 20px;
     margin-top: 0;
     padding-top: 3px;
-    color: #3fc7ff;
+    color:  var(--primary-color);
   }
   .modal-body p{
     margin: 0 0 10px 0;

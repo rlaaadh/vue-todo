@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <TodoHeader>오늘의 할일을 작성해보세요</TodoHeader>
+  <div class="page main">
+    <TodoHeader :iconType=iconType>오늘의 할일을 작성해보세요</TodoHeader>
     <TodoInput @addTodoItem="addOneItem" />
     <section class="today">
       <div class="top">
@@ -16,7 +16,6 @@
         오늘의 할 일을 등록해보세요.
       </div>
     </section>
-
     <section>
       <div class="top">
         <h2 class="title">☁️ 완료한 일 ☁️</h2>
@@ -30,24 +29,25 @@
         완료한 일을 체크해보세요.
       </div>
     </section>
-
-    <TodoFooter @clearAll="clearAllItems" />
+    <TodoFooter @clickBtn="clearAllItems">모두 지우기</TodoFooter>
   </div>
 </template>
 
 <script>
-import TodoHeader from './TodoHeader.vue'
-import TodoInput from './TodoInput.vue'
-import TodoSelect from './TodoSelect.vue'
-import TodoList from './TodoList.vue'
-import TodoFooter from './TodoFooter.vue'
+import TodoHeader from '../components/layouts/TodoHeader.vue'
+import TodoFooter from '../components/layouts/TodoFooter.vue'
+
+import TodoInput from '../components/TodoInput.vue'
+import TodoSelect from '../components/TodoSelect.vue'
+import TodoList from '../components/TodoList.vue'
 
 export default {
   data() {
     return {
       todoItems: [],
       incompleteSortOptions: 'latest',
-      completedSortOptions: 'latest'
+      completedSortOptions: 'latest',
+      iconType: 'setting'
     };
   },
   computed: {
@@ -145,7 +145,7 @@ export default {
     },
     editTodoItem(id) {
       this.$router.push({ name: 'TodoEdit', params: { id } });
-    }
+    },
   },
   created() {
     const savedIncompleteSortOption = JSON.parse(localStorage.getItem('incompleteSortOptions'));
@@ -172,10 +172,16 @@ export default {
   },
   components: {
     TodoHeader,
+    TodoFooter,
     TodoInput,
     TodoSelect,
     TodoList,
-    TodoFooter
   }
 }
 </script>
+
+<style scope>
+  .page.main{
+    padding-bottom: 50px;
+  }
+</style>

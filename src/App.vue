@@ -26,14 +26,23 @@ export default {
 </script>
 
 <style>
+:root {
+  --primary-color: #3fc7ff;
+  --secondary-color: #daf6f995;
+  
+  --font-family : "Nanum Gothic";
+}
 html {
   margin: 0;
 }
 body {
-  font-family: "Nanum Gothic", sans-serif;
+  font-family: var(--font-family);
   text-align: center;
   margin: 0;
   overflow-x: hidden;
+}
+.page{
+  padding-top: 65px;
 }
 section {
   margin: 10px;
@@ -43,7 +52,7 @@ section {
   box-sizing: border-box;
 }
 section.today {
-  background-color: #daf6f995;
+  background-color: var(--secondary-color);
 }
 section .top {
   display: flex;

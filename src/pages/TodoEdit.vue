@@ -1,6 +1,6 @@
 <template>
-  <div class="todo-edit">
-    <TodoHeader>수정 페이지</TodoHeader>
+  <div class="page edit">
+    <TodoHeader :iconType=iconType>할 일 수정</TodoHeader>
     <form action="">
       <div>
         <label for="titleFiled">제목</label>
@@ -23,6 +23,7 @@
       </button>
     </form>
 
+
     <!-- 모달 컴포넌트 -->
     <Modal v-if="showModal" @close="showModal = false">
       <div slot="header">
@@ -36,8 +37,8 @@
 </template>
 
 <script>
-import TodoHeader from './TodoHeader.vue';
-import Modal from './common/commonModal.vue';
+import TodoHeader from '../components/layouts/TodoHeader.vue';
+import Modal from '../components/common/commonModal.vue';
 
 export default {
   components: {
@@ -52,7 +53,8 @@ export default {
         inputDate: '',
         modifyDate: '',
       },
-      showModal: false
+      showModal: false,
+      iconType: 'home',
     };
   },
   created() {
@@ -72,7 +74,7 @@ export default {
       setTimeout(() => {
         this.$router.push('/vue-todo/');
       }, 1000); // 모달이 1초간 보이도록 하고, 그 후에 페이지 이동
-    }
+    },
   }
 };
 </script>
@@ -81,7 +83,7 @@ export default {
 form {
   margin: 10px;
   padding: 20px;
-  background-color: #daf6f995;
+  background-color: var(--secondary-color);
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -114,7 +116,7 @@ form textarea {
 }
 form input:focus,
 form textarea:focus{
-  border:1px solid #3fc7ff;
+  border:1px solid var(--primary-color);
 }
 .addContainer{
   width: 100%;
@@ -122,7 +124,7 @@ form textarea:focus{
   margin-top:15px;
   padding: 5px;
   font-size: 13px;
-  background-color: #3fc7ff;
+  background-color: var(--primary-color);
   border: none;
   border-radius:15px;
   box-sizing: border-box;

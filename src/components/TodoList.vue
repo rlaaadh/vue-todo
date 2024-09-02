@@ -60,6 +60,17 @@ li {
   border-radius: 5px;
   box-sizing: border-box;
 }
+li:before{
+  content:'';
+  position:absolute;
+  top:0;
+  left: 0;
+  bottom:0;
+  width: 6px;
+  background-color: var(--primary-color);
+  border-radius: 5px 0 0 5px;
+  z-index: 1;
+}
 li .contents {
   display: flex;
   align-content: center;
@@ -71,7 +82,7 @@ li:hover {
 .checkBtn {
   margin: 3px 10px 0 0;
   color: inherit;
-  color: #0c9dd9;
+  color: var(--primary-color);
 }
 .contents-text {
   flex: 1;
