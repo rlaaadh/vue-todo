@@ -85,7 +85,7 @@ export default {
           mint: ['#a3e1ce', '#e5fbf5']
         };
 
-        const [primaryColor, secondaryColor] = colorMap[this.selectedTheme] || ['#ffffff', '#000000'];
+        const [primaryColor, secondaryColor] = colorMap[this.selectedTheme];
 
         document.documentElement.style.setProperty('--primary-color', primaryColor);
         document.documentElement.style.setProperty('--secondary-color', secondaryColor);
@@ -93,24 +93,19 @@ export default {
 
       if (this.selectedFont) {
         const fonts = {
-          NanumGothic: 'Nanum Gothic',
-          NotoSansKR: 'Noto Sans KR',
+          NanumGothic: "Nanum Gothic",
+          NotoSansKR: "Noto Sans KR",
         };
-        const fontFamily = fonts[this.selectedFont] || 'Arial, sans-serif';
+        const fontFamily = fonts[this.selectedFont];
         document.documentElement.style.setProperty('--font-family', fontFamily);
       }
     },
 
     handlerFooter() {
-      // 저장하기 버튼 클릭 시 스타일 적용
-      this.applySettings();
+      this.applySettings(); // 저장하기 버튼 클릭 시 스타일 적용
 
-      if (this.selectedTheme) {
-        localStorage.setItem('theme', this.selectedTheme);
-      }
-      if (this.selectedFont) {
-        localStorage.setItem('fontFamily', this.selectedFont);
-      }
+      localStorage.setItem('theme', JSON.stringify(this.selectedTheme));
+      localStorage.setItem('fontFamily', JSON.stringify(this.selectedFont));
 
       this.showModal = true; // 모달 표시
       setTimeout(() => {
@@ -122,12 +117,9 @@ export default {
     const savedTheme = localStorage.getItem('theme');
     const savedFont = localStorage.getItem('fontFamily');
 
-    if (savedTheme) {
-      this.selectedTheme = savedTheme;
-    }
-    if (savedFont) {
-      this.selectedFont = savedFont;
-    }
+    // savedTheme가 null이 아닌 경우에만 JSON.parse를 사용
+    this.selectedTheme = savedTheme ? JSON.parse(savedTheme) : null;
+    this.selectedFont = savedFont ? JSON.parse(savedFont) : null;
 
     // 페이지 로드 시 저장된 설정을 즉시 적용
     this.applySettings();
@@ -173,6 +165,8 @@ export default {
     width: 100%;
     height: 100%;
     padding: 0;
+    font-size: 12px;
+    color: #222;
     text-align: center;
     background: #f5f5f5;
     border: none;

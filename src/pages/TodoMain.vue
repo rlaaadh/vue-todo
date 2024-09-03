@@ -47,7 +47,9 @@ export default {
       todoItems: [],
       incompleteSortOptions: 'latest',
       completedSortOptions: 'latest',
-      iconType: 'setting'
+      iconType: 'setting',
+      selectedTheme: null,
+      selectedFont: null,
     };
   },
   computed: {
@@ -146,6 +148,30 @@ export default {
     editTodoItem(id) {
       this.$router.push({ name: 'TodoEdit', params: { id } });
     },
+    applySettings() {
+      if (this.selectedTheme) {
+        const colorMap = {
+          skyblue: ['#3fc7ff', '#daf6f995'],
+          pink: ['#ffa5a5', '#faeded'],
+          yellow: ['#f6d157', '#fcf9de'],
+          mint: ['#a3e1ce', '#e5fbf5']
+        };
+
+        const [primaryColor, secondaryColor] = colorMap[this.selectedTheme];
+
+        document.documentElement.style.setProperty('--primary-color', primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+      }
+
+      if (this.selectedFont) {
+        const fonts = {
+          NanumGothic: "Nanum Gothic",
+          NotoSansKR: "Noto Sans KR",
+        };
+        const fontFamily = fonts[this.selectedFont];
+        document.documentElement.style.setProperty('--font-family', fontFamily);
+      }
+    },
   },
   created() {
     const savedIncompleteSortOption = JSON.parse(localStorage.getItem('incompleteSortOptions'));
@@ -169,6 +195,16 @@ export default {
         }
       }
     }
+
+    const savedTheme = localStorage.getItem('theme');
+    const savedFont = localStorage.getItem('fontFamily');
+
+    // savedTheme가 null이 아닌 경우에만 JSON.parse를 사용
+    this.selectedTheme = savedTheme ? JSON.parse(savedTheme) : null;
+    this.selectedFont = savedFont ? JSON.parse(savedFont) : null;
+
+    // 페이지 로드 시 저장된 설정을 즉시 적용
+    this.applySettings();
   },
   components: {
     TodoHeader,
